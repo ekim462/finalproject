@@ -7,6 +7,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 fontsize: 12pt
 linestretch: 1.5 
 indent: true
+urlcolor: blue
 header-includes:
    - \usepackage{indentfirst}
 output: pdf_document
@@ -57,7 +58,7 @@ There have been several studies on the impact of prices on youth cigarette deman
 
 In relation, Kostova et al. (2011) ran a study to estimate the price elasticity of cigarette demand among youth in low and middle income countries. For this study, the researchers employed a two-part model of cigarette demand on smoking participation and number of cigarettes smoked with country fixed effects. They controlled for individual characteristics and potential environmental confounding factors. Their results estimated a price elasticity of cigarette demand to be -2.11, meaning that a 10 percent increase in price would reduce youth cigarette consumption by 21.1 percent at the mean. These findings suggest that youth are responsive to price changes.
 
-Youth purchase prohibitions function by raising the cost of smoking through penalties. While these policies are not meant to impose large costs, rational minors must consider the potential to incur additional damages when going to purchase cigarettes. By studying how youth purchase prohibition provisions impact the demand of cigarettes, this study aims to better understand the effectiveness of this policy. It is important that policies are effective at achieving their goals as many resources are allocated to enacting legislation. If not effective, these resources should be diverted to more effective policies. The results of this study can be used to supplement and refine existing findings to develop legislation that best addresses the issues of high smoking prevalence and cigarette consumption and related health consequences. 
+Youth purchase prohibitions function by raising the cost of smoking through penalties. This study begins with the hypothesis that youth purchase prohibitions will increase in the price of smoking, subsequently, decreasing cigarette demand. While these policies are not meant to impose large costs, rational minors must consider the potential to incur additional damages when going to purchase cigarettes. By studying how youth purchase prohibition provisions impact the demand of cigarettes, this study aims to better understand the effectiveness of this policy. It is important that policies are effective at achieving their goals as many resources are allocated to enacting legislation. If not effective, these resources should be diverted to more effective policies. The results of this study can be used to supplement and refine existing findings to develop legislation that best addresses the issues of high smoking prevalence and cigarette consumption and related health consequences. 
 
 # The Data
 
@@ -65,11 +66,14 @@ The data on the youth purchase prohibition legislation come from the CDC's State
 
 First, the data were used to illustrate the number of states with youth purchase prohibitions over time. Figure 1 illustrates a dramatic increase in the number of states who have enacted youth purchase prohibition legislation from 1970 to 2018. While very few states originally had this provision, by 2018, the graph shows that a significant majority of states have policies that specifically discuss youth purchase prohibitions. Many states adopted this provision between the period of 1986 to 2000. As the Synar amendment was enacted in 1992, this increase may be related to how states acted in anticipation or in response to the new policy. 
 
+
 *Figure 1*
 
 ```{r graph, include=T, eval=T, fig.cap="", fig.width=9, echo=FALSE}
 graph
 ```
+
+\newpage
 
 Next, the data were used to demonstrate the change in average cigarette pack sales-per-capita over time depending on whether states ever adopted a youth purchase provision. Figure 2 demonstrates that prior to 1992, as indicated by the black line, sales were relatively even between states that did and did not adopt a youth purchase prohibition. Both groups experienced a decline in cigarette sales-per-capita. However, after 1992, the states began to diverge. Interestingly, the states with lower sales-per-capita were not the states that had the more restrictive policy, but rather the states that never adopted the provision. This finding goes against what is expected based on basic reasoning and the existing literature. Based on this graph, enactment may not work as expected on cigarette demand.
 
@@ -91,12 +95,12 @@ While these preliminary findings do not reflect what is expected of a policy des
 
 # Empirical Methods
 
-Following data cleaning and preliminary data visualization, a difference-in-differences design was used to investigate the effects of enacting youth purchase prohibitions on cigarette demand. As the enacted years varied across the states being studied, the treatment condition was defined as a range of years. States that enacted the policy between 1991-1995 were considered norm states as they fall within a reasonable range prior to and after the Synar act. The states were categorized based on enactment year with the same conditions as those used in Figure 3: early states, pre states, norm states, post states, and late states. 
+Following data cleaning and preliminary data visualization, a difference-in-differences design was used to investigate the effects of enacting youth purchase prohibitions on cigarette demand. As the enacted years varied across the states being studied, the treatment condition was defined as a range of years. States that enacted the policy between 1991-1995 were considered norm states as they fall within a reasonable range prior to and after the Synar amendment. The states were categorized based on enactment year with the same conditions as those used in Figure 3: early states, pre states, norm states, post states, and late states. 
 
 In Table 1, cigarette sales were compared for states based on whether they enacted policy for the pre-period of 1986-1990 and the post-period of 1996-2000. In the period before the Synar amendment, the states exhibited similar average cigarette sales, regardless of policy status. However, after the Synar Amendment, the sales differed to a greater extent. Like Figure 2, the results do not reflect what one may expect. States that did not enact the policy had lower levels of cigarette sales and states that did enact the policy had higher levels of cigarette sales. To see whether these findings are significant, it is important to run further tests.
 
 ```{r table, include=T, eval=T, fig.cap="", fig.width=9,echo=FALSE}
-knitr::kable(smoke.tbl,align = "lccrr", caption="Sales per Capita Pre and Post Synar Amendment by Policy Status") %>%
+knitr::kable(smoke.tbl,align = "lccrr", caption="Sales-per-Capita Pre and Post Synar Amendment by Policy Status") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
@@ -120,10 +124,8 @@ stargazer(dd,
 
 ```
 
-To include state and year fixed effects, the data were used to run a fixed effects OLS estimation. In the first column of Table 3, Norm States, the test yields the same estimated effect. This explains that expansion from 1991-1996 had an effect of increasing cigarette demand by 16.8 percent. 
 
-In the second column of Table 3, All States, state and year fixed effects were used to run a fixed effects OLS estimation on all states, including those that enacted the policy in a different period. The results are different as this yielded a 10.1 percent increase with the enactment of youth purchase prohibition provisions. This change is a slightly smaller increase than what was observed when only considering Norm states' enactment. The results are different because the treatment condition used to run the regression is different. 
-
+\newpage
 ```{r,echo=FALSE, message=FALSE,warning=FALSE}
 models <- list(
   "Norm States" = feols(log(sales_per_capita) ~ treat | state + Year, data=smoke.dat.norm),
@@ -132,11 +134,12 @@ models <- list(
 modelsummary(models, title = 'Fixed Effects OLS Estimation')
 ```
 
+To include state and year fixed effects, the data were used to run a fixed effects OLS estimation. In the first column of Table 3, Norm States, the test yields the same estimated effect. This explains that enactment from 1991-1996 had an effect of increasing cigarette demand by 16.8 percent. 
 
+In the second column of Table 3, All States, state and year fixed effects were used to run a fixed effects OLS estimation on all states, including those that enacted the policy in a different period. The results are different as this yielded a 10.1 percent increase with the enactment of youth purchase prohibition provisions. This change is a slightly smaller increase than what was observed when only considering Norm states' enactment. The results are different because the treatment condition used to run the regression is different. 
 
-To visualize these findings, an event study was used to estimate the effects of policy enactment during each period. Figure 4 used the specification that includes state and year effects and was limited to states that enacted policy in the norm period from 1991-1996 and states that never enacted policy. The sales-per-capita values were also logged for this figure. The pre period from 1986-1990 was used as a baseline. Figure 4 illustrates that the policy enactment had a positive effect on cigarette demand. 
+To visualize these findings, an event study was used to estimate the effects of policy enactment during each period. Figure 4 used the specification that includes state and year effects and was limited to states that enacted policy in the norm period from 1991-1996 and states that never enacted policy. The sales-per-capita values were also logged for this figure. The pre period from 1986-1990 was used as a baseline. Figure 4 illustrates that the policy enactment generally had a positive effect on cigarette demand. The confidence interval for the first period had a negative value on one end. However, all other periods had estimates that were consistently positive.
 
-\newpage
 
 *Figure 4*
 
@@ -193,7 +196,7 @@ dwplot(event.plot.dat,
                               "enact_late" = "2000-"))
 ```
 
-A second event study was run to include states that enacted the policy in other periods. Using leads and lags, the periods were assigned slightly differently. The time of treatment was assigned based on intervals of 5 years for states that enacted policy within 10 years before or after the year being considered. States where the year was greater than 10 years before or after the time of enactment were assigned -3 and 3, respectively. Like Figure 4, Figure 5 shows an increasing trend for the effect of policy enactment on cigarette demand. 
+A second event study was run to include states that enacted the policy in other periods. Using leads and lags, the periods were assigned slightly differently. The time of treatment was assigned based on intervals of 5 years for states that enacted policy within 10 years before or after the year being considered. States where the year was greater than 10 years before or after the time of enactment were assigned -3 and 3, respectively. If the state did not enact the policy, they were assigned the position of zero. Like Figure 4, Figure 5 generally shows an increasing trend for the effect of policy enactment on cigarette demand. Some of the states that were assigned a lag time had negative estimates. The sizes of the confidence intervals were smaller in the middle as opposed to estimates for the farthest ends. 
 
 
 \newpage
@@ -228,19 +231,23 @@ iplot(mod.twfe,
 
 ```
 
-# Results and Conclusion
+# Results
 
-The results of the difference-in-differences analysis indicate that the youth prohibition policy does have an effect on cigarette demand, but not how one may predict. The enactment of the policy is related to a positive effect with an increase in cigarette sales-per-capita. In this study, this finding holds true for states that only enacted the policy in  the norm period from 1991-1996 as well as for states that expanded in any period. 
+The results of the difference-in-differences analysis indicate that the youth prohibition policy does have an effect on cigarette demand, but not how one may predict. The enactment of the policy is related to a positive effect leading to an increase in cigarette sales-per-capita. In this study, this finding holds true for states that only enacted the policy in the norm period from 1991-1996 as well as for states that enacted the provision in any period. 
 
-This relationship suggests that the enactment of the policy functioned to encourage people to purchase cigarettes. This is an unlikely explanation for the trend of this relationship. Instead, there may be alternative explanations as to why there is a positive trend. For instance, states may have decided to enact a youth prohibition provision because they noticed a higher cigarette demand. On the other hand, states that enacted this policy may have relied on vendors who sell cigarettes to enforce this policy and not have additional enforcement mechanisms. Sellers face an incentive to sell cigarettes to minors despite the law if they have the belief that they will not be caught. This encourages cigarette demand from youths. 
+This relationship suggests that the enactment of the policy functioned to encourage people to purchase cigarettes. However, logically, this is an unlikely explanation for the trend of this relationship. Instead, there may be alternative explanations as to why there is a positive trend. For instance, states may have decided to enact a youth prohibition provision because they noticed a higher cigarette demand. On the other hand, states that enacted this policy may have relied on vendors who sell cigarettes to enforce this policy and not have additional enforcement mechanisms. Sellers face an incentive to sell cigarettes to minors despite the law if they have the belief that they will not be caught. This encourages cigarette demand from youths as the costs are imposed on them indirectly. 
 
-It is important to note that the difference-in-difference research design was adjusted to fit the needs of this study. Enactment of youth prohibition policies occurred over a long range of time which required the treatment to be defined as a period of time. The time ranges defined by this study were defined simply by ranges of 5 years. The assumptions made relating to the time of enactment, such as that enactment was in anticipation of or a response to the Synar act, may have led to distorted findings. In addition, the OLS regression function may have reported biased results due to an imbalance in the weighting of treatment effects by group. More research must be done before determining causality through this study.
+This study does not reflect that youth purchase prohibitions are effective at reducing cigarette demand, but that does not mean that they must be ruled out of policy. There are many factors that influence cigarette demand which make it hard to trace exactly what is causing the patterns and changes in demand seen in Figure 2 and 3. There may be a specific aspect of policy relating to how the provisions are enforced or how the costs are imposed that more accurately captures the behavior that is seen. To determine this will require further testing. 
 
-In addition, it is important to conduct further studies to continue researching the best methods to address the impact of regulation on cigarette demand. Recently, the T21 policy raised the minimum legal age for tobacco and nicotine sales to 21. This is a nationwide policy that makes it illegal for retailers to sell tobacco products to those that are under 21. Once data for the recent years have been reported, a test can be run to investigate the effects of this policy on cigarette demand. By making the range of possible consumers smaller, it can be predicted that the demand would decrease. In addition, e-cigarette smoking has become an emerging trend among adolescents. Like cigarette smoking, e-cigarettes also are related to poor health outcomes. Policies related to e-cigarettes are less comprehensive as they have only been introduced to the market relatively recently. Comparing cigarette demand as well as e-cigarette demand for states depending on whether they have a policy may provide insights on other effective measures for reducing demand. 
+# Conclusion
 
-In all, this study does not support the findings of the existing literature. While the literature finds that youths are responsive to more restrictive policies, and demand for cigarettes decreases. However, this study finds a positive relationship with regulation and cigarette demand. While these findings do not correspond with other studies on this topic, this study contributes to the literature by presenting a different effect of policy on demand. In addition, this study suggests other avenues for future research.
+In all, this study does not support the findings of the existing literature. The literature finds that youths are responsive to more restrictive policies and, in response, demand for cigarettes decreases. However, this study finds a positive relationship with regulation and cigarette demand. While these findings do not correspond with other studies on this topic, this study contributes to the literature by presenting a different effect of policy on demand. 
 
-For the purpose of transparency, the code and data used can be found at 
+It is important to note that the difference-in-difference research design was adjusted to fit the needs of this study. Enactment of youth prohibition policies occurred over a long range of time which required the treatment to be defined as a period of time. The time ranges defined by this study were defined simply by ranges of 5 years. The assumptions made relating to the time of enactment, such as that enactment was in anticipation of or a response to the Synar amendment, may have led to distorted findings. In addition, the OLS regression function may have reported biased results due to an imbalance in the weighting of treatment effects by group. More research must be done before determining causality through this study.
+
+In addition, it is important to conduct further studies to continue researching the best methods to address the impact of regulation on cigarette demand. Recently, the T21 policy raised the minimum legal age for tobacco and nicotine sales to 21. This is a nationwide policy that makes it illegal for retailers to sell tobacco products to those that are under 21. Once data for the recent years have been reported, a test can be run to investigate the effects of this policy on cigarette demand. By making the range of possible consumers smaller, it can be predicted that the demand would decrease. In addition, e-cigarette smoking has become an emerging trend among adolescents. Like cigarette smoking, e-cigarettes also are related to poor health outcomes. Policies related to e-cigarettes have been researched less as they have only been introduced to the market relatively recently. Comparing cigarette demand as opposed to e-cigarette demand by state depending on whether they have a policy that is more restrictive towards youth access in terms of penalties and enforcement may provide insights on other effective measures for reducing demand. 
+
+For the purpose of transparency, the code and data used can be found on [github](https://github.com/ekim462/finalproject).
 
 
 \newpage
