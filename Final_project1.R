@@ -10,8 +10,15 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
                fixest, dotwhisker, kableExtra, stargazer)
 
 #load data
-cdc_tax_data <- readRDS("C:/Users/Genia/Desktop/Spring 2022/ECON 470/cdc-tobacco/cdc-tobacco/cdc-tax-data.rds")
-purchase_prohib <- read.csv("C:/Users/Genia/Desktop/Spring 2022/ECON 470/cdc-tobacco/cdc-tobacco/purchaseproh.csv", fileEncoding="UTF-8-BOM")
+source('data/cdc-tax-data.rds')
+source('data/purchaseproh.csv')
+
+# cdc_tax_data <- readRDS("C:/Users/Genia/Desktop/Spring 2022/ECON 470/cdc-tobacco/cdc-tobacco/cdc-tax-data.rds")
+# purchase_prohib <- read.csv("C:/Users/Genia/Desktop/Spring 2022/ECON 470/cdc-tobacco/cdc-tobacco/purchaseproh.csv", fileEncoding="UTF-8-BOM")
+
+cdc_tax_data= readRDS('data/cdc-tax-data.rds')
+purchase_prohib= read.csv('data/purchaseproh.csv', fileEncoding='UTF-8-BOM')
+
 
 #clean and merge data
 purchase_prohib <- purchase_prohib %>%
