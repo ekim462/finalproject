@@ -21,7 +21,7 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
                magick, rdrobust, haven, estimatr, lfe, rddensity, here, modelsummary,
                fixest, dotwhisker, kableExtra, stargazer)
 
-source('Final_project1.R')
+#source('Final_project1.R')
 ```
 
 ```{r, include=FALSE}
